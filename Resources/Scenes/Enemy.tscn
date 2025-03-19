@@ -1,0 +1,41 @@
+[gd_scene load_steps=8 format=3 uid="uid://da7ucb13icyt7"]
+
+[ext_resource type="Script" path="res://Scripts/enemy.gd" id="1_532k8"]
+[ext_resource type="Texture2D" uid="uid://bu6sfyth71wb6" path="res://Sprite/enemigo_pruebas.png" id="2_483vy"]
+[ext_resource type="PackedScene" uid="uid://cg2py6taqle06" path="res://Resources/Scenes/hitboxComponent.tscn" id="2_ks7uu"]
+[ext_resource type="PackedScene" uid="uid://b545wh0qi8mpm" path="res://Resources/Scenes/movement.tscn" id="3_55mmi"]
+[ext_resource type="PackedScene" uid="uid://cmg083jvh86cj" path="res://Resources/Scenes/healthComponent.tscn" id="5_247ad"]
+[ext_resource type="PackedScene" uid="uid://c48u6vxu6hykp" path="res://Resources/Scenes/sensor.tscn" id="6_we6e3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vyvn7"]
+size = Vector2(14, 14)
+
+[node name="Enemy" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_532k8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_vyvn7")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_483vy")
+hframes = 2
+
+[node name="Movement" parent="." instance=ExtResource("3_55mmi")]
+speed = 100.0
+
+[node name="HitboxComponent" parent="." instance=ExtResource("2_ks7uu")]
+
+[node name="HealthComponnent" parent="." instance=ExtResource("5_247ad")]
+
+[node name="Sensor" parent="." instance=ExtResource("6_we6e3")]
+collision_mask = 2
+
+[node name="RotateDirection" type="Timer" parent="."]
+wait_time = 0.5
+
+[connection signal="body_entered" from="Sensor" to="." method="_on_sensor_body_entered"]
+[connection signal="body_exited" from="Sensor" to="." method="_on_sensor_body_exited"]
+[connection signal="timeout" from="RotateDirection" to="." method="_on_rotate_direction_timeout"]

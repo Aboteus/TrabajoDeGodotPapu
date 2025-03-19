@@ -1,0 +1,31 @@
+[gd_scene load_steps=7 format=3 uid="uid://di2t60b3uwnh0"]
+
+[ext_resource type="Script" path="res://Scripts/player.gd" id="1_f2t4j"]
+[ext_resource type="Texture2D" uid="uid://b85t5jhh3rblg" path="res://Sprite/rest_pj.png" id="1_opr6d"]
+[ext_resource type="PackedScene" uid="uid://b545wh0qi8mpm" path="res://Resources/Scenes/movement.tscn" id="2_pip81"]
+[ext_resource type="PackedScene" uid="uid://cg2py6taqle06" path="res://Resources/Scenes/hitboxComponent.tscn" id="3_lvsqn"]
+[ext_resource type="PackedScene" uid="uid://cmg083jvh86cj" path="res://Resources/Scenes/healthComponent.tscn" id="4_kar85"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vyvn7"]
+size = Vector2(14, 14)
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_f2t4j")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 0)
+shape = SubResource("RectangleShape2D_vyvn7")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1, 0)
+texture = ExtResource("1_opr6d")
+hframes = 3
+
+[node name="Movement" parent="." instance=ExtResource("2_pip81")]
+speed = 130.0
+
+[node name="HealthComponnent" parent="." instance=ExtResource("4_kar85")]
+
+[node name="HitboxComponent" parent="." instance=ExtResource("3_lvsqn")]
